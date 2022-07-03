@@ -1,12 +1,12 @@
-package entity;
+package com.example.demo.entity;
 
 import java.util.List;
 
-public interface ISuperheroe {
+public interface IHeroe {
 	
 	String getNombre();
 	
-	Integer getPoder();
+	Poder getPoder();
 	
 	boolean isVivo();
 	
@@ -14,7 +14,7 @@ public interface ISuperheroe {
 	
 	void setNombre(String nombre);
 	
-	void setPoder(Integer poder);
+	void setPoder(Poder poder);
 	
 	void matar();
 	
