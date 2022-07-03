@@ -1,4 +1,4 @@
-package datos;
+package entity;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ public interface ISuperheroe {
 	
 	String getNombre();
 	
-	List<Poder> getPoder();
+	Integer getPoder();
 	
 	boolean isVivo();
 	
@@ -14,7 +14,7 @@ public interface ISuperheroe {
 	
 	void setNombre(String nombre);
 	
-	void addPoder(Poder poder);
+	void setPoder(Integer poder);
 	
 	void matar();
 	
