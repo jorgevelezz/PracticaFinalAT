@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -27,9 +28,11 @@ public class Poder implements Serializable{
 	private Integer poderId;
 
 	@Column(name = "nombre", nullable = false)
+	@NotNull(message = "El campo nombre no puede ser nulo")
 	private String nombre;
 	
 	@Column(name = "dano", nullable = false)
+	@NotNull(message = "El campo de daño no puede ser nulo")
 	private Integer dano;
 	
 	@ManyToOne(fetch = FetchType.EAGER)

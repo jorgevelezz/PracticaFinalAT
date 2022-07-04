@@ -11,22 +11,27 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="Heroe")
 public class Heroe implements IHeroe,Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name = "heroeId", nullable=false, unique=true) 
 	@GeneratedValue( strategy = GenerationType.IDENTITY) 
 	private Integer heroeId;
 	
+	@NotNull(message = "El campo nombre no puede ser nulo")
 	@Column(name = "nombre", nullable=false)
 	private String nombre;
 	
+	@NotNull(message = "El campo universo no puede ser nulo")
 	@Column(name = "universo", nullable=false)
 	private String universo;
+	
 	
 	@Column(name = "vivo", nullable=false)
 	private boolean vivo;
@@ -42,7 +47,6 @@ public class Heroe implements IHeroe,Serializable{
 	@ManyToOne( fetch = FetchType.LAZY)
 	@JoinColumn( name = "poderId", nullable=false)
 	private Poder poder;
-	
 	
 	
 	@Override
