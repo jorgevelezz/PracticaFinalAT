@@ -15,21 +15,21 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.entity.Heroe;
-import com.example.demo.service.HelloService;
+import com.example.demo.service.RepHeroes;
 
 
 @Controller
 public class controladorCrud {
 
 	@Autowired
-	private HelloService hc;
+	private RepHeroes hc;
 
 	/*
 	public controladorCrud(HelloService helloService) {
 		this.helloService = helloService;
 	}*/
 
-    
+
     @RequestMapping(value="/lista", method = RequestMethod.GET)
     public String listaHeroes(ModelMap mp){
         mp.put("heroes", hc.findAll());
