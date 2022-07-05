@@ -13,6 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import lombok.Data;
+import lombok.Getter;
+
 @Entity
 @Table(name="Heroe")
 public class Heroe implements IHeroe,Serializable{
@@ -21,11 +24,12 @@ public class Heroe implements IHeroe,Serializable{
 
 	@Id
 	@Column(name = "heroeId", nullable=false, unique=true) 
-	@GeneratedValue( strategy = GenerationType.IDENTITY) 
+	@GeneratedValue( strategy = GenerationType.SEQUENCE) 
 	private Integer heroeId;
 	
 	@NotNull(message = "El campo nombre no puede ser nulo")
 	@Column(name = "nombre", nullable=false)
+	@Getter
 	private String nombre;
 	
 	@NotNull(message = "El campo universo no puede ser nulo")
@@ -36,36 +40,8 @@ public class Heroe implements IHeroe,Serializable{
 	@Column(name = "vivo", nullable=false)
 	private boolean vivo;
 	
-	//Mapeo Plano
-	/*
-	@Column(name = "poder", nullable=false)
-	private Integer poderId;
-	*/
-	
-	//MAPEO DE RELACION
-	
-	@ManyToOne( fetch = FetchType.LAZY)
-	@JoinColumn( name = "poderId", nullable=false)
-	private Poder poder;
-	
-	
-	@Override
-	public String getNombre() {return this.nombre;}
 
-	@Override
-	public Poder getPoder() {return this.poder;}
 
-	@Override
-	public boolean isVivo() {return this.vivo;}
- 
-	@Override
-	public String getUniverso() {return this.universo;}
-
-	@Override
-	public void setNombre(String nombre) {this.nombre = nombre;}
-
-	@Override
-	public void setPoder(Poder poder) {this.poder = poder;}
 
 	@Override
 	public void matar() {this.vivo=false;}
