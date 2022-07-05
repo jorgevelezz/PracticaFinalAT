@@ -8,11 +8,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "HeroePoder")
+@Getter
+@Setter
 public class HeroePoder implements Serializable {
-	
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	private HeroePoderKey id;
 	
@@ -25,16 +33,5 @@ public class HeroePoder implements Serializable {
 	private Poder poder;
 
 	
-	public Heroe getHeroe() {return heroe;}
-
-	public void setHeroe(Heroe heroe) {this.heroe = heroe;}
-
-	public Poder getPoder() {return poder;}
-
-	public void setPoder(Poder poder) {this.poder = poder;}
-
-	public HeroePoderKey getId() {return id;}
-
-	public void setId(HeroePoderKey id) {this.id = id;}
 	
 }

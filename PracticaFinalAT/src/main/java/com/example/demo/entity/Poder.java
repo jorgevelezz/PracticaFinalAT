@@ -14,10 +14,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
+import lombok.Setter;
 
 
 @Entity
 @Table(name = "Poder")
+@Getter
+@Setter
 public class Poder implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -35,12 +38,6 @@ public class Poder implements Serializable{
 	@Column(name = "dano", nullable = false)
 	@NotNull(message = "El campo de daño no puede ser nulo")
 	private Integer dano;
-	
-	/*
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "heroeId")
-	private Heroe heroe;
-	*/
 	
 	@OneToMany()
 	@JoinColumn(name = "poderId")

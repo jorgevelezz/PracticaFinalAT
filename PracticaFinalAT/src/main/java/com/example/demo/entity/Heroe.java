@@ -15,9 +15,12 @@ import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name="Heroe")
+@Getter
+@Setter
 public class Heroe implements IHeroe,Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -40,9 +43,7 @@ public class Heroe implements IHeroe,Serializable{
 	@Column(name = "vivo", nullable=false)
 	private boolean vivo;
 	
-
-
-
+	
 	@Override
 	public void matar() {this.vivo=false;}
 
