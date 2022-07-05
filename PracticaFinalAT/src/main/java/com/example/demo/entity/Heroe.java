@@ -12,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,12 +30,11 @@ public class Heroe implements IHeroe,Serializable{
 	
 	@NotNull(message = "El campo nombre no puede ser nulo")
 	@Column(name = "nombre", nullable=false)
-	@Getter
 	private String nombre;
 	
-	@NotNull(message = "El campo universo no puede ser nulo")
-	@Column(name = "universo", nullable=false)
-	private String universo;
+	@ManyToOne( fetch = FetchType.LAZY)
+	@JoinColumn( name = "universo", nullable=false)
+	private Universo universo;
 	
 	
 	@Column(name = "vivo", nullable=false)
@@ -49,9 +46,6 @@ public class Heroe implements IHeroe,Serializable{
 
 	@Override
 	public void resucitar() {this.vivo=true;}
-	
-
-
 		
 
 }

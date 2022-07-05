@@ -35,9 +35,15 @@ public class Poder implements Serializable{
 	@Getter 
 	private String nombre;
 	
+	
 	@Column(name = "dano", nullable = false)
 	@NotNull(message = "El campo de daño no puede ser nulo")
 	private Integer dano;
+	
+	@Column(name = "tipo", nullable = false)
+	@NotNull(message = "El campo de tipo de daño no puede ser nulo")
+	private String tipoDano;
+	
 	
 	@OneToMany()
 	@JoinColumn(name = "poderId")
