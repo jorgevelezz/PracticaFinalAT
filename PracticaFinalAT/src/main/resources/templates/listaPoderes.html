@@ -16,11 +16,9 @@
 
 				<th>Nombre</th>
 
-				<th>Universo</th>
+				<th>Daño</th>
 
-				<th>Vivo</th>
-
-				<th>Poder</th>
+				<th>Tipo</th>
 
 				</tr>
 
@@ -28,13 +26,13 @@
 
 		<tbody>
 
-			<tr data-th-each="heroe: ${heroes}">
+			<tr data-th-each="poder: ${poderes}">
 
-				<td data-th-text="${heroe.getNombre()}"></td>
+				<td data-th-text="${poder.getNombre()}"></td>
 
-				<td data-th-text="${heroe.getUniverso()}"></td>
+				<td data-th-text="${poder.getDano()}"></td>
 
-				<td data-th-text="${heroe.isVivo()}"></td>
+				<td data-th-text="${poder.getTipo()}"></td>
 				
 			</tr>
 

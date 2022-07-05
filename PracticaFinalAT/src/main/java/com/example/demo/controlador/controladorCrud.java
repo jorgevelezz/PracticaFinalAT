@@ -1,40 +1,66 @@
 package com.example.demo.controlador;
 
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.example.demo.entity.Heroe;
-import com.example.demo.service.RepHeroes;
+import com.example.demo.repos.RepHeroes;
+import com.example.demo.repos.RepPoderes;
 
 
 @Controller
 public class controladorCrud {
 
 	@Autowired
-	private RepHeroes hc;
+	private RepHeroes rh;
+	
+	/*
+	Constructor:
+	
+	public controladorCrud(RepHeroes rh) {
+		this.rh = rh;
+	}
+	
+	*/
+	
+	@Autowired
+	private RepPoderes rp;
 
 	/*
-	public controladorCrud(HelloService helloService) {
-		this.helloService = helloService;
-	}*/
+	Constructor:
+	
+	public controladorCrud(RepPoderes rp) {
+		this.rp = rp;
+	}
+	
+	*/
 
 
+	//D
     @RequestMapping(value="/lista", method = RequestMethod.GET)
-    public String listaHeroes(ModelMap mp){
-        mp.put("heroes", hc.findAll());
-        return "lista";
+    public String lista(
+    		@RequestParam("entidad") String entidad,
+    		ModelMap mp){
+    	
+    		switch (entidad) {
+    		case "heroes":
+    			mp.put("heroes", rh.findAll());
+    	        return "listaHeroes";
+    		case "poderes":
+    			mp.put("poderes", rp.findAll());
+    	        return "listaPoderes";
+    		case "universos":
+    			mp.put("universos", rh.findAll());
+    	        return "listaUniversos";
+    	    default:
+    	    	return "X";	
+    		}
+    	
+    	}
+    		
+        
     }
- 
- 
-}
+    

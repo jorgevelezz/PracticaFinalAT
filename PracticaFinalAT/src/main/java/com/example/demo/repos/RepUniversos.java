@@ -4,9 +4,10 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.entity.Heroe;
+import com.example.demo.entity.Universo;
 
 @Repository
-public interface RepHeroes extends CrudRepository<Heroe,Integer>{
+public interface RepUniversos extends CrudRepository<Universo,Integer>{
 
 
 }
