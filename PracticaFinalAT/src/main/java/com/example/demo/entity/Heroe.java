@@ -12,13 +12,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name="Heroe")
-@Getter
-@Setter
+@Data
 public class Heroe implements IHeroe,Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -34,8 +37,8 @@ public class Heroe implements IHeroe,Serializable{
 	
 	@ManyToOne( fetch = FetchType.LAZY)
 	@JoinColumn( name = "universo", nullable=false)
+	@NotNull(message = "El campo universo no puede ser nulo")
 	private Universo universo;
-	
 	
 	@Column(name = "vivo", nullable=false)
 	private boolean vivo;

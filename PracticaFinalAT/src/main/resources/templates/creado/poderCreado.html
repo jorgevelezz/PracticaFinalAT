@@ -2,15 +2,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" />
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-
-<title>ListaHeroes</title>
+<title>Poder Creado</title>
 </head>
 
 <body>
 <div class="panel panel-info">
-	<div class="panel-heading"><h3>Lista Poderes</h3></div>
+	<div class="panel -heading"><h3>Poder creado con éxito</h3></div>
 	<table class="table table-striped">
 
 		<thead>
@@ -19,9 +16,10 @@
 
 				<th>Nombre</th>
 
+				<th>Tipo</th>
+
 				<th>Daño</th>
 
-				<th>Tipo</th>
 
 				</tr>
 
@@ -29,13 +27,11 @@
 
 		<tbody>
 
-			<tr data-th-each="poder: ${poderes}">
-
 				<td data-th-text="${poder.getNombre()}"></td>
 
-				<td data-th-text="${poder.getDano()}"></td>
-
 				<td data-th-text="${poder.getTipoDano()}"></td>
+
+				<td data-th-text="${poder.getDano()}"></td>
 				
 			</tr>
 
@@ -47,10 +43,7 @@
 
 <br/>
 
-	<a class="btn btn-info" href="/create/createPoder">Nuevo</a>
-	
 	<a class="btn btn-info" href="/inicio">Volver</a>
-
 </body>
 
 </html>

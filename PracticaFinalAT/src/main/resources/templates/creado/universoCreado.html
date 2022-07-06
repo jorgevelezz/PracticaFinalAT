@@ -2,14 +2,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" />
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-<title>ListaHeroes</title>
+<title>Heroe Creado</title>
 </head>
 
 <body>
 <div class="panel panel-info">
-	<div class="panel-heading"><h3>Lista Universos</h3></div>
+	<div class="panel -heading"><h3>Universo creado con éxito</h3></div>
 	<table class="table table-striped">
 
 		<thead>
@@ -20,19 +18,15 @@
 
 				<th>Dimension</th>
 
-
 				</tr>
 
 		</thead>
 
 		<tbody>
 
-			<tr data-th-each="universo: ${universos}">
-
 				<td data-th-text="${universo.getNombre()}"></td>
 
 				<td data-th-text="${universo.getDimension()}"></td>
-
 				
 			</tr>
 
@@ -44,10 +38,7 @@
 
 <br/>
 
-	<a class="btn btn-info" href="/create/createUniverso">Nuevo</a>
-	
 	<a class="btn btn-info" href="/inicio">Volver</a>
-
 </body>
 
 </html>

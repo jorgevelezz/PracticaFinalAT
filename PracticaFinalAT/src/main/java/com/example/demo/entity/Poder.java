@@ -43,11 +43,6 @@ public class Poder implements Serializable{
 	@Column(name = "tipo", nullable = false)
 	@NotNull(message = "El campo de tipo de daño no puede ser nulo")
 	private String tipoDano;
-	
-	
-	@OneToMany()
-	@JoinColumn(name = "poderId")
-	private List<HeroePoder> heroes;
 
 	
 }

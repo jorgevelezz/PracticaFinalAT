@@ -4,38 +4,40 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" />
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-<title>ListaHeroes</title>
+
+<title>Heroe Creado</title>
 </head>
 
 <body>
 <div class="panel panel-info">
-	<div class="panel-heading"><h3>Lista de Heroes</h3></div>
+	<div class="panel-heading"><h3>Heroe creado con éxito</h3></div>
 	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>Nombre</th>
-				<th>Universo</th>
-				<th>Vivo</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
 
-			<tr data-th-each="heroe: ${heroes}" >
-			
+		<thead>
+
+			<tr>
+
+				<th>Nombre</th>
+
+				<th>Universo</th>
+
+				<th>Vivo</th>
+
+				<th>Poder</th>
+
+				</tr>
+
+		</thead>
+
+		<tbody>
+		
+			<tr>
+
 				<td data-th-text="${heroe.getNombre()}"></td>
 
 				<td data-th-text="${heroe.getUniverso().getNombre()}"></td>
 
 				<td data-th-text="${heroe.isVivo()}"></td>
-				
-				<td>
-               		<form th:action="@{/delete/Heroe}" method="post">
-                    	<input type="hidden" name="heroeId"  th:value="${heroe.heroeId}"/>
-                        <button type="submit" class="btn btn-danger">Eliminar <i class="fa fa-trash"></i></button>
-                    </form>
-                </td>
-				
 				
 			</tr>
 
@@ -47,11 +49,6 @@
 
 <br/>
 
-	<a class="btn btn-info" href="/create?entidad=heroe">Nuevo</a>
-
-	
-	<a class="btn btn-info" href="/delete?entidad=heroe">Dar Poderes</a>
-	
 	<a class="btn btn-info" href="/inicio">Volver</a>
 </body>
 
