@@ -16,7 +16,9 @@
 				<th>Nombre</th>
 				<th>Universo</th>
 				<th>Vivo</th>
-				<th></th>
+				<th>Poderes</th>
+				<th>Eliminar</th>
+				<th>Dar Poderes</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -29,10 +31,19 @@
 
 				<td data-th-text="${heroe.isVivo()}"></td>
 				
+				<td> </td>
+				
 				<td>
                		<form th:action="@{/delete/Heroe}" method="post">
-                    	<input type="hidden" name="heroeId"  th:value="${heroe.heroeId}"/>
+                    	<input type="hidden" name="heroeId"  th:value="${heroe.getHeroeId()}"/>
                         <button type="submit" class="btn btn-danger">Eliminar <i class="fa fa-trash"></i></button>
+                    </form>
+                </td>
+                
+                <td>
+               		<form th:action="@{/seleccionarPoder}" method="post">
+                    	<input type="hidden" name="heroeId"  th:value="${heroe.getHeroeId()}"/>
+                        <button type="submit" class="btn btn-primary btn-block">Dar Poder <i class="fa fa-trash"></i></button>
                     </form>
                 </td>
 				

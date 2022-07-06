@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Heroe;
+import com.example.demo.entity.HeroePoder;
+import com.example.demo.entity.HeroePoderKey;
 import com.example.demo.entity.Poder;
 import com.example.demo.entity.Universo;
+import com.example.demo.repos.RepHeroePoder;
 import com.example.demo.repos.RepHeroes;
 import com.example.demo.repos.RepPoderes;
 import com.example.demo.repos.RepUniversos;
@@ -41,6 +44,9 @@ public class controladorCrud {
 	
 	@Autowired
 	private RepUniversos ru;
+	
+	@Autowired
+	RepHeroePoder rhp;
 
 	//D
     @RequestMapping(value="/lista", method = RequestMethod.GET)
@@ -51,6 +57,8 @@ public class controladorCrud {
     		switch (entidad.toLowerCase()) {
     		case "heroes":
     			mp.put("heroes", rh.findAll());
+    			
+    			mp.put("heroePoder", rhp.findAll());
     	        return "/list/listaHeroes";
     		case "poderes":
     			mp.put("poderes", rp.findAll());
@@ -68,15 +76,17 @@ public class controladorCrud {
     public String crear(@RequestParam("entidad") String entidad,
     		ModelMap mp){
     	
-    	switch (entidad.toLowerCase()) {
+    	switch (entidad) {
 		case "heroe":
     		mp.put("heroe", new Heroe());
     		mp.put("universos", ru.findAll());
     	    return "/create/createHeroe"; 
-    	    
+
 		case "poder":
+			
     		mp.put("poder", new Poder());
     	    return "/create/createPoder"; 
+    	    
 		case "universo":
     		mp.put("universo", new Universo());
     	    return "/create/createUniverso"; 
@@ -138,6 +148,37 @@ public class controladorCrud {
     public String eliminarHeroe(Heroe heroe, ModelMap mp){
     		rh.delete(heroe);
             return "delete/Heroe";
+        }
+    
+    @PostMapping(value="/delete/Poder")
+    public String eliminarPoder(Poder poder, ModelMap mp){
+    		rp.delete(poder);
+            return "delete/Poder";
+        }
+    
+    @PostMapping(value="/delete/Universo")
+    public String eliminarPoder(Universo universo, ModelMap mp){
+    		ru.delete(universo);
+            return "delete/Universo";
+        }
+    
+    
+    @PostMapping(value="/seleccionarPoder")
+    public String seleccionarPoder(Heroe heroe, ModelMap mp){
+    	
+    	mp.addAttribute("heroeId", rh.findById(heroe.getHeroeId()).orElse(null));
+		mp.put("poderes", rp.findAll());
+            return "darPoder";
+        }
+    
+    @PostMapping(value="/darPoder")
+    public String darPoder(Poder poder,Heroe heroe,ModelMap mp){
+    	
+    	rhp.save(new HeroePoder(new HeroePoderKey(heroe.getHeroeId(),poder.getPoderId()),heroe,poder));
+    	
+    	return "x";
+	
+    	
         }
     
     @RequestMapping(value="/", method = RequestMethod.GET)

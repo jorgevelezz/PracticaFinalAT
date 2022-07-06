@@ -37,6 +37,14 @@
 
 				<td data-th-text="${poder.getTipoDano()}"></td>
 				
+				<td>
+               		<form th:action="@{/delete/Poder}" method="post">
+                    	<input type="hidden" name="poderId"  th:value="${poder.getPoderId()}"/>
+                        <button type="submit" class="btn btn-danger">Eliminar <i class="fa fa-trash"></i></button>
+                    </form>
+                </td>
+				
+				
 			</tr>
 
 		</tbody>
@@ -47,7 +55,7 @@
 
 <br/>
 
-	<a class="btn btn-info" href="/create/createPoder">Nuevo</a>
+	<a class="btn btn-info" href="/create?entidad=poder">Nuevo</a>
 	
 	<a class="btn btn-info" href="/inicio">Volver</a>
 

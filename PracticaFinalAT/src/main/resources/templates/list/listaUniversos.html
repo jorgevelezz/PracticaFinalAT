@@ -33,6 +33,12 @@
 
 				<td data-th-text="${universo.getDimension()}"></td>
 
+				<td>
+               		<form th:action="@{/delete/Universo}" method="post">
+                    	<input type="hidden" name="universoId"  th:value="${universo.getUniversoId()}"/>
+                        <button type="submit" class="btn btn-danger">Eliminar <i class="fa fa-trash"></i></button>
+                    </form>
+                </td>
 				
 			</tr>
 
@@ -44,7 +50,7 @@
 
 <br/>
 
-	<a class="btn btn-info" href="/create/createUniverso">Nuevo</a>
+	<a class="btn btn-info" href="/create?entidad=universo">Nuevo</a>
 	
 	<a class="btn btn-info" href="/inicio">Volver</a>
 

@@ -9,13 +9,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "HeroePoder")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class HeroePoder implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,6 +34,7 @@ public class HeroePoder implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "poderId", nullable = false, insertable = false, updatable = false)
 	private Poder poder;
+	
 
 	
 	
