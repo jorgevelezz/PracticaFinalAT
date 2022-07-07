@@ -10,12 +10,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Embeddable
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class HeroePoderKey implements Serializable {
 
 	private static final long serialVersionUID = 1L;

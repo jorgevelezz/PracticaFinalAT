@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "HeroePoder")
@@ -34,8 +35,5 @@ public class HeroePoder implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "poderId", nullable = false, insertable = false, updatable = false)
 	private Poder poder;
-	
 
-	
-	
 }

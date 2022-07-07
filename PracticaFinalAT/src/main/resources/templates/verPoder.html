@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" />
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<title>Lista Poderes</title>
+</head>
+
+<body>
+<div class="panel panel-info">
+	<div class="panel-heading"><h3>Lista de Poderes</h3></div>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				
+				<th>Nombre</th>
+				<th>Tipo de Daño</th>
+				<th>Daño</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			<tr data-th-each="heroePoder: ${poderes}" >
+									
+				<td data-th-text="${heroePoder.getPoder().getNombre()}"></td>
+				<td data-th-text="${heroePoder.getPoder().getTipoDano()}"></td>
+				<td data-th-text="${heroePoder.getPoder().getDano()}"></td>
+				
+				<td>
+               		<form th:action="@{/delete/HeroePoder}" method="post">
+               		
+               			<input type="hidden" name="heroeId"  th:value="${heroePoder.getHeroe().getHeroeId()}"/>
+                    	<input type="hidden" name="poderId"  th:value="${heroePoder.getPoder().getPoderId()}"/>
+                    	
+                        <button type="submit" class="btn btn-danger">Eliminar <i class="fa fa-trash"></i></button>
+                    </form>
+                </td>
+
+				
+			</tr>
+
+		</tbody>
+
+	</table>
+
+</div>
+<br/>
+	<form th:action="@{/seleccionarPoder/} + ${heroe.getHeroeId()}" method="post">
+               		
+                        <button type="submit" class="btn btn-info">Dar Poderes <i class="fa fa-trash"></i></button>
+                    </form>
+                    
+	
+	<a class="btn btn-info" href="/lista?entidad=heroes">Volver</a>
+</body>
+
+</html>

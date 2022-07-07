@@ -1,6 +1,9 @@
 package com.example.demo.controlador;
 
 
+import java.util.List;
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,7 +52,6 @@ public class controladorCrud {
 	@Autowired
 	RepHeroePoder rhp;
 
-	//D
     @RequestMapping(value="/lista", method = RequestMethod.GET)
     public String lista(
     		@RequestParam("entidad") String entidad,
@@ -57,7 +60,6 @@ public class controladorCrud {
     		switch (entidad.toLowerCase()) {
     		case "heroes":
     			mp.put("heroes", rh.findAll());
-    			
     			mp.put("heroePoder", rhp.findAll());
     	        return "/list/listaHeroes";
     		case "poderes":
@@ -163,23 +165,172 @@ public class controladorCrud {
         }
     
     
-    @PostMapping(value="/seleccionarPoder")
-    public String seleccionarPoder(Heroe heroe, ModelMap mp){
+    @RequestMapping(value="/verPoder")
+    public String verPoder(Heroe heroe, ModelMap mp){	
     	
-    	mp.addAttribute("heroeId", rh.findById(heroe.getHeroeId()).orElse(null));
-		mp.put("poderes", rp.findAll());
-            return "darPoder";
+    	mp.addAttribute("heroe", heroe);
+    	
+    	mp.put("poderes", rhp.findByHeroe(heroe));
+		
+        return "verPoder";
         }
     
-    @PostMapping(value="/darPoder")
-    public String darPoder(Poder poder,Heroe heroe,ModelMap mp){
+    
+    @RequestMapping(value="/seleccionarPoder/{id}")
+    public String seleccionarPoder(@PathVariable int id,ModelMap mp){
     	
-    	rhp.save(new HeroePoder(new HeroePoderKey(heroe.getHeroeId(),poder.getPoderId()),heroe,poder));
+    	mp.addAttribute("idHeroe", id);
+    	
+    	
+    	mp.addAttribute("poderes", rp.findAll());
+    	
+    	return "seleccionarPoder";
+	 	
+        }
+    
+    @RequestMapping(value="/darPoder/{id}")
+    public String darPoder(@PathVariable int id,Poder poder,ModelMap mp){
+    	
+    	rhp.save(new HeroePoder(new HeroePoderKey(id,poder.getPoderId()),rh.findById(id).get(),poder));
     	
     	return "x";
 	
     	
         }
+
+    @PostMapping(value="/delete/HeroePoder")
+    public String eliminarPoder(HeroePoderKey heroePoder, ModelMap mp){
+    	
+    	System.out.println(heroePoder.toString());	
+    	rhp.deletePoderHeroe(heroePoder);
+            return "delete/Poder";
+        }
+    
+    @RequestMapping(value = "/editar/{letra}/{id}")
+    public String mostrarFormularioEditar(@PathVariable String letra,@PathVariable int id, ModelMap model) 
+    {
+    	
+    	if(letra.equals("H")) {
+        model.addAttribute("heroe", rh.findById(id).orElse(null));
+        model.addAttribute("universos", ru.findAll());
+        return "edit/Heroe";
+    	}
+    	else if (letra.equals("P")) {
+    		model.addAttribute("poder", rp.findById(id).orElse(null));
+            return "edit/Poder";
+    		
+    	}
+    	else{
+    		model.addAttribute("universo", ru.findById(id).orElse(null));
+            return "edit/Universo";
+    	}
+    }
+    
+    @PostMapping(value = "/edit/Heroe/{id}")
+    public String actualizarHeroe(@Valid Heroe heroe, ModelMap model) 
+    {
+
+        Optional<Heroe> posibleHeroe = rh.findById(heroe.getHeroeId());
+
+        if (posibleHeroe.isPresent()  && !posibleHeroe.get().getHeroeId().equals(heroe.getHeroeId())) {
+            System.out.println("error");
+        }
+        
+        rh.save(heroe);
+        return "/inicio";
+    }
+    
+    @PostMapping(value = "/edit/Poder/{id}")
+    public String actualizarPoder(@Valid Poder poder, ModelMap model) 
+    {
+
+        Optional<Heroe> posibleHeroe = rh.findById(poder.getPoderId());
+
+        if (posibleHeroe.isPresent()  && !posibleHeroe.get().getHeroeId().equals(poder.getPoderId())) {
+            System.out.println("error");
+        }
+        
+        rp.save(poder);
+        return "/lista";
+    }
+    
+    @PostMapping(value = "/edit/Universo/{id}")
+    public String actualizarUniverso(@Valid Universo universo, ModelMap model) 
+    {
+
+        Optional<Heroe> posibleHeroe = rh.findById(universo.getUniversoId());
+
+        if (posibleHeroe.isPresent()  && !posibleHeroe.get().getHeroeId().equals(universo.getUniversoId())) {
+            System.out.println("error");
+        }
+        
+        ru.save(universo);
+        return "/lista";
+    }
+    
+    
+    @RequestMapping(value="/buscar/porId", method=RequestMethod.POST)
+    public String buscarHeroeId(Heroe heroe, ModelMap mp){
+    	
+    	Optional<Heroe> posibleHeroe = rh.findById(heroe.getHeroeId());
+
+            if (posibleHeroe.isPresent()) {
+            	mp.put("heroe", posibleHeroe.get());
+                return "/mostrar/porId";
+            	
+            }
+            else {
+            	return "/error/noExisteEntidad";
+            }
+        }
+    
+    @RequestMapping(value="/buscar/porNombre", method=RequestMethod.POST)
+    public String buscarHeroeNombre(Heroe heroe, ModelMap mp){
+    	
+    	
+    	List<Heroe> posibleHeroe = rh.findByName(heroe.getNombre());
+    	
+
+            if (!posibleHeroe.isEmpty()) {
+            	mp.put("heroes", posibleHeroe);
+                return "/mostrar/porNombre";
+            	
+            }
+            else {
+            	return "/error/noExisteEntidad";
+            }
+        }
+    
+    //TODO
+    @RequestMapping(value="/cambiarVida", method=RequestMethod.POST)
+    public String cambiarVida(Heroe heroe, ModelMap mp){
+    	
+    	
+    	heroe = rh.findById(heroe.getHeroeId()).get();
+    	if(heroe.isVivo()) {
+    		heroe.matar();
+    	}
+    	else {
+    		heroe.resucitar();
+    	}
+    	
+    	rh.save(heroe);
+
+    	
+    	
+    		return "x";
+        }
+   
+    @RequestMapping(value="/buscarPorId", method = RequestMethod.GET)
+    public String vistaId(Heroe heroe,ModelMap mp){
+	    return "/buscar/porId"; 
+	}
+    
+    @RequestMapping(value="/buscarPorNombre", method = RequestMethod.GET)
+    public String vistaNombre(Heroe heroe,ModelMap mp){
+	    return "/buscar/porNombre"; 
+	}
+    
     
     @RequestMapping(value="/", method = RequestMethod.GET)
     public String inicio(ModelMap mp){

@@ -32,6 +32,12 @@
 				<td data-th-text="${universo.getNombre()}"></td>
 
 				<td data-th-text="${universo.getDimension()}"></td>
+				
+				<td>
+               		<form th:action="@{/editar/U/}  + ${universo.getUniversoId()}" method="post">
+                        <button type="submit" class="btn btn-warning">Editar <i class="fa fa-trash"></i></button>
+                    </form>
+                </td>
 
 				<td>
                		<form th:action="@{/delete/Universo}" method="post">

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,6 +44,10 @@ public class Poder implements Serializable{
 	@Column(name = "tipo", nullable = false)
 	@NotNull(message = "El campo de tipo de daño no puede ser nulo")
 	private String tipoDano;
+	
+	 @OneToMany(fetch = FetchType.LAZY)  
+	 @JoinColumn( name = "poderId", nullable=false , insertable = false, updatable = false)
+	 private List<HeroePoder> heroesPoder; 
 
 	
 }
