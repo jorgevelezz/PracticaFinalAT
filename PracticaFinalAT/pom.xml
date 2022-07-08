@@ -84,6 +84,12 @@
     		<version>3.1.0</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>com.att.ajsc</groupId>
+			<artifactId>sdk-java-common</artifactId>
+			<version>6.1-oss</version>
+		</dependency>
+		
 		
 		<!-- Java Web dependencies -->
 		<dependency>
