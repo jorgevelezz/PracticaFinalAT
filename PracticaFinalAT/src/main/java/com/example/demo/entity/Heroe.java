@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 
@@ -31,6 +32,7 @@ public class Heroe implements IHeroe,Serializable{
 	private Integer heroeId;
 	
 	@NotNull(message = "El campo nombre no puede ser nulo")
+	@Size(min = 3, message = "El campo nombre tiene que tener un mínimo de 3 caracteres")
 	@Column(name = "nombre", nullable=false)
 	private String nombre;
 	

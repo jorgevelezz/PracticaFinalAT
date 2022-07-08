@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -280,8 +281,10 @@ public class ControladorCrud {
     @PostMapping(value = "/edit/Heroe/{id}")
     public String actualizarHeroe(@Valid HeroeDTO heroe, ModelMap model) 
     {
+    	
 
         Optional<Heroe> posibleHeroe = rh.findById(heroe.getHeroeId());
+        
 
         if (posibleHeroe.isPresent()) {
         	
@@ -360,14 +363,14 @@ public class ControladorCrud {
         }
     
     @PostMapping(value="/cambiarVida")
-    public String cambiarVida(HeroeDTO heroe, ModelMap mp){
+    public String cambiarVida(HeroeDTO heroeDTO, ModelMap mp){
     	
     	
-    	Optional<Heroe >posibleHeroe = rh.findById(heroe.getHeroeId());
+    	Optional<Heroe >posibleHeroe = rh.findById(heroeDTO.getHeroeId());
     	
-    	if(posibleHeroe.isPresent()) {
+    	if(posibleHeroe.isPresent()) {		
     		
-    		
+    		Heroe heroe = posibleHeroe.get();
     		
     		if(heroe.isVivo()) {
     			

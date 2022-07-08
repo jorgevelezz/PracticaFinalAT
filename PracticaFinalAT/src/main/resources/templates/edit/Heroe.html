@@ -31,6 +31,8 @@
     			 		<option th:each="universo: ${universos}" th:value="${universo.getUniversoId()}" th:text="${universo.getNombre()}"></option>
 					</select>
             </div>
+            
+            <input type="hidden" th:field="*{vivo}">
 
             <button class="btn btn-success" type="submit">Guardar</button>
         </form>
