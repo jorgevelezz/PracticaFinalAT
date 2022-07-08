@@ -18,9 +18,10 @@ public class HeroeDTO implements IHeroe,Serializable{
 	private Integer heroeId;
 
 	@NotNull(message = "El campo nombre no puede ser nulo")
-	@Size(min = 3, message = "El campo nombre tiene que tener un mínimo de 3 caracteres")
+	@Size(min = 3, max=15, message = "El nombre tiene que estar entre 3-15 caracteres")
 	private String nombre;
 	
+	@NotNull(message = "El campo universo no puede ser nulo")
 	private Universo universo;
 	
 	private boolean vivo;

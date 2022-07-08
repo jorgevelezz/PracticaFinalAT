@@ -28,7 +28,7 @@ public class Universo implements Serializable {
 	@GeneratedValue( strategy = GenerationType.SEQUENCE) 
 	private Integer universoId;
 	
-	@NotNull(message = "El campo nombre no puede ser nulo")
+@NotNull(message = "El campo nombre no puede ser nulo")
 	@Column(name = "nombre", nullable=false)
 	private String nombre;
 	

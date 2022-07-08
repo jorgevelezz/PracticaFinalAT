@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -109,6 +110,7 @@ public class ControladorCrud {
     	switch (entidad) {
     	
 			case SHEROE:
+				
 	    		mp.put(SHEROE, new Heroe());
 	    		mp.put(SUNIVERSOS, ru.findAll());
 	    	    return "/create/createHeroe"; 
@@ -131,14 +133,15 @@ public class ControladorCrud {
     	}
     
     @PostMapping(value="/create/createHeroe")
-    public String crearHeroe(@Valid HeroeDTO heroe,
+    public String crearHeroe(@Valid @ModelAttribute HeroeDTO heroe,
             BindingResult bindingResult, ModelMap mp){
     	
+    	System.out.println(bindingResult.getFieldError("nombre"));
     	//Comprueba si se cumplen los requisitos establecidos en la clase Heroe
     	//Size,NonNull...
         if(bindingResult.hasErrors()){
             mp.put(SHEROE, rh.findAll());
-            return "/list/listaHeroes";
+            return crear("heroe",mp);
             
         }else{
         	
@@ -153,7 +156,8 @@ public class ControladorCrud {
     	
         if(bindingResult.hasErrors()){
             mp.put(SUNIVERSOS, ru.findAll());
-            return "/list/listaUniversos";
+            return crear("universo",mp);
+            
         }else{
             ru.save(modelMapper.map(universo, Universo.class));
             mp.put(SUNIVERSO, universo);
@@ -168,7 +172,7 @@ public class ControladorCrud {
     	
         if(bindingResult.hasErrors()){
             mp.put(SUNIVERSOS, ru.findAll());
-            return "/list/listaPoderes";
+            return crear("poder",mp);
             
         }else{
             rp.save(modelMapper.map(poder, Poder.class));
