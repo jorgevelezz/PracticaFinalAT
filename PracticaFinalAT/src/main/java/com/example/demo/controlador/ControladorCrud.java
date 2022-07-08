@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.DTO.HeroeDTO;
-import com.example.demo.DTO.PoderDTO;
-import com.example.demo.DTO.UniversoDTO;
+import com.example.demo.dto.HeroeDTO;
+import com.example.demo.dto.PoderDTO;
+import com.example.demo.dto.UniversoDTO;
 import com.example.demo.entity.Heroe;
 import com.example.demo.entity.HeroePoder;
 import com.example.demo.entity.HeroePoderKey;
@@ -136,12 +135,11 @@ public class ControladorCrud {
     public String crearHeroe(@Valid @ModelAttribute HeroeDTO heroe,
             BindingResult bindingResult, ModelMap mp){
     	
-    	System.out.println(bindingResult.getFieldError("nombre"));
     	//Comprueba si se cumplen los requisitos establecidos en la clase Heroe
     	//Size,NonNull...
         if(bindingResult.hasErrors()){
             mp.put(SHEROE, rh.findAll());
-            return crear("heroe",mp);
+            return crear(SHEROE,mp);
             
         }else{
         	
@@ -156,7 +154,7 @@ public class ControladorCrud {
     	
         if(bindingResult.hasErrors()){
             mp.put(SUNIVERSOS, ru.findAll());
-            return crear("universo",mp);
+            return crear(SUNIVERSO,mp);
             
         }else{
             ru.save(modelMapper.map(universo, Universo.class));
@@ -172,7 +170,7 @@ public class ControladorCrud {
     	
         if(bindingResult.hasErrors()){
             mp.put(SUNIVERSOS, ru.findAll());
-            return crear("poder",mp);
+            return crear(SPODER,mp);
             
         }else{
             rp.save(modelMapper.map(poder, Poder.class));

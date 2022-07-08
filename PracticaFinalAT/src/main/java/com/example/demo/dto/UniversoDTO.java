@@ -1,4 +1,4 @@
-package com.example.demo.DTO;
+package com.example.demo.dto;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
