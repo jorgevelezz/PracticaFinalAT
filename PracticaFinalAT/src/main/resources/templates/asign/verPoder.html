@@ -46,13 +46,12 @@
 
 </div>
 <br/>
-	<form th:action="@{/seleccionarPoder/} + ${heroe.getHeroeId()}" method="post">
+			<form  th:action="@{/seleccionarPoder/} + ${heroe.getHeroeId()}" method="post">
                		
-                        <button type="submit" class="btn btn-info">Dar Poderes <i class="fa fa-trash"></i></button>
-                    </form>
+                  <button type="submit" class="btn btn-info">Dar Poderes </button>
+             </form>
                     
-	
-	<a class="btn btn-info" href="/lista?entidad=heroes">Volver</a>
+			<a class="btn btn-info" href="/lista?entidad=heroes">Volver</a>
 </body>
 
 </html>

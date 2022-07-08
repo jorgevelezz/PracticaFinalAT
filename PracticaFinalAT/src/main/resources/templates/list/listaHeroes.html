@@ -36,12 +36,12 @@
                     	
                     	<div th:if="${heroe.isVivo()} == False">
                     	<input type="hidden" name="heroeId"  th:value="${heroe.getHeroeId()}"/>
-                        <button type="submit" class="btn btn-danger" data-th-text="${heroe.isVivo()}" ></i></button>
+                        <button type="submit" class="btn btn-danger" data-th-text="Muerto" ></i></button>
                         </div>
                         
                         <div th:if="${heroe.isVivo()} == True">
                         <input type="hidden" name="heroeId"  th:value="${heroe.getHeroeId()}"/>
-                        <button type="submit" class="btn btn-large btn-success" data-th-text="${heroe.isVivo()}" > </button>
+                        <button type="submit" class="btn btn-large btn-success" data-th-text="Vivo" > </button>
                         </div>
                         
                         
