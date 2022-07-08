@@ -14,14 +14,18 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
 @Entity
 @Table(name = "Poder")
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Poder implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -33,7 +37,6 @@ public class Poder implements Serializable{
 
 	@Column(name = "nombre", nullable = false)
 	@NotNull(message = "El campo nombre no puede ser nulo")
-	@Getter 
 	private String nombre;
 	
 	
@@ -45,9 +48,12 @@ public class Poder implements Serializable{
 	@NotNull(message = "El campo de tipo de daño no puede ser nulo")
 	private String tipoDano;
 	
+	/*
+	
 	 @OneToMany(fetch = FetchType.LAZY)  
 	 @JoinColumn( name = "poderId", nullable=false , insertable = false, updatable = false)
 	 private List<HeroePoder> heroesPoder; 
+	 */
 
 	
 }
