@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" />
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+<title>Heroe </title>
+</head>
+
+<body>
+<div class="panel panel-info">
+	<div class="panel-heading"><h3>Heroe:</h3></div>
+	<table class="table table-striped">
+
+		<thead>
+
+			<tr>
+
+				<th>Nombre</th>
+
+				<th>Universo</th>
+
+				<th>Vivo</th>
+
+				</tr>
+
+		</thead>
+
+		<tbody>
+	
+			<tr data-th-each="heroe: ${heroes}">
+
+				<td data-th-text="${heroe.getNombre()}"></td>
+
+				<td data-th-text="${heroe.getUniverso().getNombre()}"></td>
+
+				<td th:if="${heroe.isVivo()} == False">
+                    	<input type="hidden" name="heroeId"  th:value="${heroe.getHeroeId()}"/>
+                        <button type="submit" class="btn btn-danger" data-th-text="Muerto" ></button>
+                </td>
+                        
+                <td th:if="${heroe.isVivo()} == True">
+                        <input type="hidden" name="heroeId"  th:value="${heroe.getHeroeId()}"/>
+                        <button type="submit" class="btn btn-large btn-success" data-th-text="Vivo" > </button>
+                 </td>
+				
+			</tr>
+
+		</tbody>
+
+	</table>
+
+</div>
+
+<br/>
+
+	<a class="btn btn-info" href="/inicio">Volver</a>
+</body>
+
+</html>

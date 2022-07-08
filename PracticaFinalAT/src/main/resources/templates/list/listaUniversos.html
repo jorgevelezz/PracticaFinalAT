@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" />
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<title>ListaHeroes</title>
+</head>
+
+<body>
+<div class="panel panel-info">
+	<div class="panel-heading"><h3>Lista Universos</h3></div>
+	<table class="table table-striped">
+
+		<thead>
+
+			<tr>
+
+				<th>Nombre</th>
+
+				<th>Dimension</th>
+
+
+				</tr>
+
+		</thead>
+
+		<tbody>
+
+			<tr data-th-each="universo: ${universos}">
+
+				<td data-th-text="${universo.getNombre()}"></td>
+
+				<td data-th-text="${universo.getDimension()}"></td>
+				
+				<td>
+               		<form th:action="@{/editar/U/}  + ${universo.getUniversoId()}" method="post">
+                        <button type="submit" class="btn btn-warning">Editar <i class="fa fa-trash"></i></button>
+                    </form>
+                </td>
+
+				<td>
+               		<form th:action="@{/delete/Universo}" method="post">
+                    	<input type="hidden" name="universoId"  th:value="${universo.getUniversoId()}"/>
+                        <button type="submit" class="btn btn-danger">Eliminar <i class="fa fa-trash"></i></button>
+                    </form>
+                </td>
+				
+			</tr>
+
+		</tbody>
+
+	</table>
+
+</div>
+
+<br/>
+
+	<a class="btn btn-info" href="/create?entidad=universo">Nuevo</a>
+	
+	<a class="btn btn-info" href="/inicio">Volver</a>
+
+</body>
+
+</html>
