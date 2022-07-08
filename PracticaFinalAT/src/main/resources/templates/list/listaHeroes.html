@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="master">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" />
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<title>ListaHeroes</title>
+</head>
+
+<body>
+<div class="panel panel-info">
+	<div class="panel-heading"><h3>Lista de Heroes</h3></div>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>Universo</th>
+				<th>Vivo</th>
+				<th>Eliminar</th>
+				<th>Editar</th>
+				<th>Editar Poderes</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			<tr data-th-each="heroe: ${heroes}" >
+			
+				<td data-th-text="${heroe.getNombre()}"></td>
+
+				<td data-th-text="${heroe.getUniverso().getNombre()}"></td>
+
+				 <td>
+               		<form th:action="@{/cambiarVida}"  method="post">
+                    	
+                    	<div th:if="${heroe.isVivo()} == False">
+                    	<input type="hidden" name="heroeId"  th:value="${heroe.getHeroeId()}"/>
+                        <button type="submit" class="btn btn-danger" data-th-text="Muerto" ></i></button>
+                        </div>
+                        
+                        <div th:if="${heroe.isVivo()} == True">
+                        <input type="hidden" name="heroeId"  th:value="${heroe.getHeroeId()}"/>
+                        <button type="submit" class="btn btn-large btn-success" data-th-text="Vivo" > </button>
+                        </div>
+                        
+                        
+                    </form>
+                </td>
+				
+				
+				<td>
+               		<form th:action="@{/delete/Heroe}" method="post">
+                    	<input type="hidden" name="heroeId"  th:value="${heroe.getHeroeId()}"/>
+                        <button type="submit" class="btn btn-danger">Eliminar <i class="fa fa-trash"></i></button>
+                    </form>
+                </td>
+                
+                <td>
+               		<form th:action="@{/editar/H/}  + ${heroe.getHeroeId()}" method="post">
+                        <button type="submit" class="btn btn-warning">Editar </button>
+                    </form>
+                </td>
+                
+                <td>
+               		<form th:action="@{/verPoder}" method="post">
+                    	<input type="hidden" name="heroeId"  th:value="${heroe.getHeroeId()}"/>
+                        <button type="submit" class="btn btn-primary btn-block" >Ver Poderes <i class="fa fa-trash"></i></button>
+                    </form>
+                </td>
+                
+				
+				
+			</tr>
+
+		</tbody>
+
+	</table>
+
+</div>
+
+<br/>
+
+	<a class="btn btn-info" href="/create?entidad=heroe">Nuevo</a>
+	
+	<a class="btn btn-info" href="/inicio">Volver</a>
+</body>
+
+</html>

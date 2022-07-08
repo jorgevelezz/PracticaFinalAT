@@ -5,21 +5,28 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 @Embeddable
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class HeroePoderKey implements Serializable {
-	
+
+	private static final long serialVersionUID = 1L;
+
 	@Column(name = "heroeId")
 	private Integer heroeId;
 	
 	@Column(name = "poderId")
 	private Integer poderId;
 
-	public Integer getHeroeId() {return heroeId;}
-
-	public void setHeroeId(Integer heroeId) {this.heroeId = heroeId;}
-
-	public Integer getPoderId() {return poderId;}
-
-	public void setPoderId(Integer poderId) {this.poderId = poderId;}
 	
 }

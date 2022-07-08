@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" />
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+<title>Nuevo</title>
+</head>
+
+<body>
+
+<div class="page-header">
+<h1>Nuevo Universo</h1>
+</div>
+
+<form action="#" th:action="@{/create/createUniverso}" th:object="${universo}" method="post">
+	
+	<div class="form-group">
+		<label for="nombre" class="col-sm-2 control-label">Nombre</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre Universo" required="required"/>
+			<small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="dimension" class="col-sm-2 control-label">Dimensión</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" name="dimension" id="dimension" placeholder="Nombre Dimension" required="required"/>
+			<small class="form-text text-danger" th:if="${#fields.hasErrors('dimension')}" th:errors="*{dimension}"></small>		</div>
+	</div>
+	
+	
+	<div class="form-group">
+		<div class="col-smoffset-2 col-sm-10">
+			<button type="submit" class="btn btn-default">Crear</button>
+		</div>
+	</div>
+</form>
+</body>
+</html>

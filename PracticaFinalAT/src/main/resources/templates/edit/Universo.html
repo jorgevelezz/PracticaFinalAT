@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="master">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" />
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<title>Editar</title>
+
+
+</head>
+<body>
+<main layout:fragment="contenido">
+    <div class="col-12">
+        <h2>Editar poder </h2>
+        <form th:object="${universo}" th:action="@{/edit/Universo/} + ${universo.getUniversoId()}" method="post">
+            
+            <input type="hidden" th:field="*{universoId}">
+            <div class="form-group">
+                <label for="nombre">Nombre del universo</label>
+                <input autocomplete="off" autofocus th:field="*{nombre}" id="nombre"
+                       placeholder="Escribe el nombre del universo" type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{nombre}"></div>
+            </div>
+            
+           <div class="form-group">
+                <label for="nombre">Dimension del universo</label>
+                <input autocomplete="off" autofocus th:field="*{dimension}" id="dimension"
+                       placeholder="Escribe el nombre de la dimension" type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{nombre}"></div>
+            </div>
+            
+            
+            
+        
+
+            <button class="btn btn-success" type="submit">Guardar</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>
