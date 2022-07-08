@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.demo.example.service.HeroePoderService;
+import com.demo.example.service.HeroeService;
+import com.demo.example.service.PoderService;
+import com.demo.example.service.UniversoService;
 import com.example.demo.dto.HeroeDTO;
 import com.example.demo.dto.PoderDTO;
 import com.example.demo.dto.UniversoDTO;
@@ -35,26 +39,27 @@ import com.example.demo.repos.RepUniversos;
 @Controller
 public class ControladorCrud {
 
+	
 	@Autowired
-	private RepHeroes rh;
+	private HeroeService heroeService;
 	
 	/*
 	Constructor:
 	
-	public controladorCrud(RepHeroes rh) {
-		this.rh = rh;
+	public controladorCrud(HeroeService heroeService) {
+		this.heroeService = heroeService;
 	}
 	
 	*/
 	
 	@Autowired
-	private RepPoderes rp;
+	private PoderService poderService;
 	
 	@Autowired
-	private RepUniversos ru;
+	private UniversoService universoService;
 	
 	@Autowired
-	RepHeroePoder rhp;
+	private HeroePoderService heroePoderService;
 	
 
 	private ModelMapper modelMapper = new ModelMapper();
@@ -82,18 +87,18 @@ public class ControladorCrud {
     		switch (entidad.toLowerCase()) {
     		case SHEROES:
     			
-    			mp.put(SHEROES, rh.findAll());
-    			mp.put("heroePoder", rhp.findAll());
+    			mp.put(SHEROES, heroeService.findAll());
+    			mp.put("heroePoder", heroePoderService.findAll());
     	        return "/list/listaHeroes";
     	        
     		case SPODERES:
     			
-    			mp.put(SPODERES, rp.findAll());
+    			mp.put(SPODERES, poderService.findAll());
     	        return "/list/listaPoderes";
     	        
     		case SUNIVERSOS:
     			
-    			mp.put(SUNIVERSOS, ru.findAll());
+    			mp.put(SUNIVERSOS, universoService.findAll());
     	        return "/list/listaUniversos";
     	        
     	    default:
@@ -102,7 +107,7 @@ public class ControladorCrud {
     	
     	}
     
-    @GetMapping(value="/create")
+    @GetMapping(value="/create" )
     public String crear(@RequestParam("entidad") String entidad,
     		ModelMap mp){
     	
@@ -111,7 +116,7 @@ public class ControladorCrud {
 			case SHEROE:
 				
 	    		mp.put(SHEROE, new Heroe());
-	    		mp.put(SUNIVERSOS, ru.findAll());
+	    		mp.put(SUNIVERSOS, universoService.findAll());
 	    	    return "/create/createHeroe"; 
 	
 			case SPODER:
@@ -138,12 +143,12 @@ public class ControladorCrud {
     	//Comprueba si se cumplen los requisitos establecidos en la clase Heroe
     	//Size,NonNull...
         if(bindingResult.hasErrors()){
-            mp.put(SHEROE, rh.findAll());
+            mp.put(SHEROE, heroeService.findAll());
             return crear(SHEROE,mp);
             
         }else{
         	
-            rh.save(modelMapper.map(heroe, Heroe.class));
+        	heroeService.save(modelMapper.map(heroe, Heroe.class));
             mp.put(SHEROE, heroe);
             return lista(SHEROES,mp);
         }
@@ -153,11 +158,11 @@ public class ControladorCrud {
             BindingResult bindingResult, ModelMap mp){
     	
         if(bindingResult.hasErrors()){
-            mp.put(SUNIVERSOS, ru.findAll());
+            mp.put(SUNIVERSOS, universoService.findAll());
             return crear(SUNIVERSO,mp);
             
         }else{
-            ru.save(modelMapper.map(universo, Universo.class));
+        	universoService.save(modelMapper.map(universo, Universo.class));
             mp.put(SUNIVERSO, universo);
             
             return lista(SUNIVERSOS,mp);
@@ -169,11 +174,11 @@ public class ControladorCrud {
             BindingResult bindingResult, ModelMap mp){
     	
         if(bindingResult.hasErrors()){
-            mp.put(SUNIVERSOS, ru.findAll());
+            mp.put(SUNIVERSOS, universoService.findAll());
             return crear(SPODER,mp);
             
         }else{
-            rp.save(modelMapper.map(poder, Poder.class));
+        	poderService.save(modelMapper.map(poder, Poder.class));
             mp.put(SPODER, poder);
             return lista(SPODERES,mp);
         }
@@ -181,21 +186,26 @@ public class ControladorCrud {
     
     @PostMapping(value="/delete/Heroe")
     public String eliminarHeroe(HeroeDTO heroe, ModelMap mp){
-    		rh.delete(modelMapper.map(heroe, Heroe.class));
-            return "delete/Heroe";
+    	
+    		//Primero borramos sus poderes
+    		heroePoderService.deleteAllPoderHeroe(modelMapper.map(heroe, Heroe.class));
+    		//Luego al héroe
+    		heroeService.delete(modelMapper.map(heroe, Heroe.class));
+    		
+    		return lista(SHEROES,mp);
         }
     
     @PostMapping(value="/delete/Poder")
     public String eliminarPoder(PoderDTO poder, ModelMap mp){
     	
-    		rp.delete(modelMapper.map(poder, Poder.class));
+    	poderService.delete(modelMapper.map(poder, Poder.class));
             return lista(SPODERES,mp);
         }
     
     @PostMapping(value="/delete/Universo")
     public String eliminarPoder(UniversoDTO universo, ModelMap mp){
     	
-    		ru.delete(modelMapper.map(universo, Universo.class));
+    		universoService.delete(modelMapper.map(universo, Universo.class));
             return "delete/Universo";
         }
     
@@ -205,7 +215,7 @@ public class ControladorCrud {
     	
     	mp.addAttribute(SHEROE, heroe);
     	
-    	mp.put(SPODERES, rhp.findByHeroe(modelMapper.map(heroe, Heroe.class)));
+    	mp.put(SPODERES, heroePoderService.findByHeroe(modelMapper.map(heroe, Heroe.class)));
 		
         return "asign/verPoder";
         }
@@ -217,7 +227,7 @@ public class ControladorCrud {
     	mp.addAttribute("idHeroe", id);
     	
     	
-    	mp.addAttribute(SPODERES, rp.findAll());
+    	mp.addAttribute(SPODERES, poderService.findAll());
     	
     	return "asign/seleccionarPoder";
 	 	
@@ -226,11 +236,11 @@ public class ControladorCrud {
     @RequestMapping(value="/darPoder/{id}")
     public String darPoder(@PathVariable int id,PoderDTO poder,ModelMap mp){
     	
-    	Optional<Heroe> heroe = rh.findById(id);
+    	Optional<Heroe> heroe = heroeService.findById(id);
     	
     	if(heroe.isPresent()) {
     	
-    		rhp.save(new HeroePoder(new HeroePoderKey(id,poder.getPoderId()),heroe.get(),modelMapper.map(poder, Poder.class)));
+    		heroePoderService.save(new HeroePoder(new HeroePoderKey(id,poder.getPoderId()),heroe.get(),modelMapper.map(poder, Poder.class)));
     	
     		return verPoder(modelMapper.map(heroe.get(), HeroeDTO.class),mp);
     	}
@@ -246,9 +256,9 @@ public class ControladorCrud {
     @PostMapping(value="/delete/HeroePoder")
     public String eliminarPoder(HeroePoderKey heroePoder, ModelMap mp){
     	
-    	rhp.deletePoderHeroe(heroePoder);
+    	heroePoderService.deletePoderHeroe(heroePoder);
     	
-    	Optional <Heroe> heroe = rh.findById(heroePoder.getHeroeId());
+    	Optional <Heroe> heroe = heroeService.findById(heroePoder.getHeroeId());
     	
     	if(heroe.isPresent()) {
     		
@@ -265,17 +275,17 @@ public class ControladorCrud {
     {
     	
     	if(letra.equals("H")) {
-        model.addAttribute(SHEROE, rh.findById(id).orElse(null));
-        model.addAttribute(SUNIVERSOS, ru.findAll());
+        model.addAttribute(SHEROE, heroeService.findById(id).orElse(null));
+        model.addAttribute(SUNIVERSOS, universoService.findAll());
         return "edit/Heroe";
     	}
     	else if (letra.equals("P")) {
-    		model.addAttribute(SPODER, rp.findById(id).orElse(null));
+    		model.addAttribute(SPODER, poderService.findById(id).orElse(null));
             return "edit/Poder";
     		
     	}
     	else{
-    		model.addAttribute(SUNIVERSO, ru.findById(id).orElse(null));
+    		model.addAttribute(SUNIVERSO, universoService.findById(id).orElse(null));
             return "edit/Universo";
     	}
     }
@@ -285,12 +295,12 @@ public class ControladorCrud {
     {
     	
 
-        Optional<Heroe> posibleHeroe = rh.findById(heroe.getHeroeId());
+        Optional<Heroe> posibleHeroe = heroeService.findById(heroe.getHeroeId());
         
 
         if (posibleHeroe.isPresent()) {
         	
-        	rh.save(modelMapper.map(heroe, Heroe.class));
+        	heroeService.save(modelMapper.map(heroe, Heroe.class));
         	return lista(SHEROES,model);
         }
         
@@ -306,7 +316,7 @@ public class ControladorCrud {
     public String actualizarPoder(@Valid PoderDTO poder, ModelMap model) 
     {
 
-        	rp.save(modelMapper.map(poder, Poder.class));
+    		poderService.save(modelMapper.map(poder, Poder.class));
          	return lista(SPODERES,model);
  
 
@@ -316,11 +326,11 @@ public class ControladorCrud {
     public String actualizarUniverso(@Valid UniversoDTO universo, ModelMap model) 
     {
 
-        Optional<Universo> posibleUniverso = ru.findById(universo.getUniversoId());
+        Optional<Universo> posibleUniverso = universoService.findById(universo.getUniversoId());
 
         if (posibleUniverso.isPresent()) {
         	
-        	ru.save(modelMapper.map(universo, Universo.class));
+        	universoService.save(modelMapper.map(universo, Universo.class));
         	return lista(SUNIVERSOS,model);
         }
         else {
@@ -335,7 +345,7 @@ public class ControladorCrud {
     @PostMapping(value="/buscar/porId")
     public String buscarHeroeId(HeroeDTO heroe, ModelMap mp){
     	
-    	Optional<Heroe> posibleHeroe = rh.findById(heroe.getHeroeId());
+    	Optional<Heroe> posibleHeroe = heroeService.findById(heroe.getHeroeId());
 
             if (posibleHeroe.isPresent()) {
             	mp.put(SHEROE, posibleHeroe.get());
@@ -351,7 +361,7 @@ public class ControladorCrud {
     public String buscarHeroeNombre(HeroeDTO heroe, ModelMap mp){
     	
     	
-    	List<Heroe> posibleHeroe = rh.findByName(heroe.getNombre());
+    	List<Heroe> posibleHeroe = heroeService.findByName(heroe.getNombre());
     	
 
             if (!posibleHeroe.isEmpty()) {
@@ -368,7 +378,7 @@ public class ControladorCrud {
     public String cambiarVida(HeroeDTO heroeDTO, ModelMap mp){
     	
     	
-    	Optional<Heroe >posibleHeroe = rh.findById(heroeDTO.getHeroeId());
+    	Optional<Heroe >posibleHeroe = heroeService.findById(heroeDTO.getHeroeId());
     	
     	if(posibleHeroe.isPresent()) {		
     		
@@ -383,7 +393,7 @@ public class ControladorCrud {
         		heroe.resucitar();
         	}
         	
-        	rh.save(modelMapper.map(heroe, Heroe.class));
+    		heroeService.save(modelMapper.map(heroe, Heroe.class));
 	
     	}
     	

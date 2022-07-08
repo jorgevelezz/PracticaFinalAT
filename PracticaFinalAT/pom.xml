@@ -41,6 +41,18 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<!-- PARA EXCLUIR VERSIONES ANTERIORES DE JUNIT -->
+			<exclusions>
+				<exclusion>
+					<groupId>junit</groupId>
+					<artifactId>junit</artifactId>
+				</exclusion>
+				<!-- ESTA EXCLUSIÓN ES PARA EJECUTAR TEST DE JUNIT 5 -->
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -97,6 +109,7 @@
     		<artifactId>thymeleaf-spring5</artifactId>
     		<version>3.0.11.RELEASE</version>
 		</dependency>
+
 
 	</dependencies>
 

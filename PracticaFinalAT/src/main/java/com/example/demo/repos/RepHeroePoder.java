@@ -18,6 +18,11 @@ public interface RepHeroePoder extends CrudRepository<HeroePoder,HeroePoderKey>{
 	
 	 @Query("SELECT e from HeroePoder e where e.heroe =:heroe ")     
 	 List<HeroePoder> findByHeroe(@Param("heroe") Heroe heroe);
+	 
+	 @Modifying
+	 @Transactional
+	 @Query("delete from HeroePoder e where e.heroe=:heroe")     
+	 void deleteAllPoderHeroe(@Param("heroe") Heroe heroe);
 
 	 @Modifying
 	 @Transactional
